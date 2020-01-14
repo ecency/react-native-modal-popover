@@ -201,8 +201,8 @@ export class Popover extends React.PureComponent<PopoverProps, PopoverState> {
     return { x: anchor.x - popoverCenter.x, y: anchor.y - popoverCenter.y };
   };
 
-  componentWillReceiveProps(nextProps: PopoverProps) {
-    const willBeVisible = nextProps.visible;
+  componentDidUpdate(prevProps: PopoverProps) {
+    const willBeVisible = prevProps.visible;
     const { visible, fromRect, displayArea } = this.props;
 
     if (willBeVisible !== visible) {
@@ -213,8 +213,8 @@ export class Popover extends React.PureComponent<PopoverProps, PopoverState> {
       } else {
         this.startAnimation(false);
       }
-    } else if (willBeVisible && (fromRect !== nextProps.fromRect || displayArea !== nextProps.displayArea)) {
-      const geom = this.computeGeometry(nextProps, this.state.contentSize);
+    } else if (willBeVisible && (fromRect !== prevProps.fromRect || displayArea !== prevProps.displayArea)) {
+      const geom = this.computeGeometry(prevProps, this.state.contentSize);
 
       const isAwaitingShow = this.state.isAwaitingShow;
       this.setState({ ...geom }, () => {
